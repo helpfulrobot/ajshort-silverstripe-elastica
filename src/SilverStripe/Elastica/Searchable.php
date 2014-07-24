@@ -97,7 +97,10 @@ class Searchable extends \DataExtension {
 				if (array_key_exists($class, self::$mappings)) {
 					$spec['type'] = self::$mappings[$class];
 				}
-			}
+			} else {
+                // TODO: Generalize to the mapping types by allowing the type to be specified in $searchable_fields
+                $spec["type"] = "string";
+            }
 
 			$result[$name] = $spec;
 		}
@@ -135,12 +138,16 @@ class Searchable extends \DataExtension {
 		$fields = array();
 
 		foreach ($this->getElasticaFields() as $field => $config) {
-			$fields[$field] = $this->owner->$field;
+            if (null === $this->owner->$field && is_callable(get_class($this->owner) . "::" . $field)) {
+                $fields[$field] = $this->owner->$field();
+            } else {
+                $fields[$field] = $this->owner->$field;
+            }
 		}
 
         $document = new Document($this->owner->ID, $fields);
 
-        $callable = array($this->owner, 'updateElasticsearchDocument');
+        $callable = get_class($this->owner).'::updateElasticsearchDocument';
         if(is_callable($callable))
         {
             $document = call_user_func($callable, $document);
