@@ -30,6 +30,8 @@ matrix:
       env: DB=MYSQL
 
     # Run tests in parallel in order to avoid hitting the 50 min time limit
+    # A different value for TESTS is used as a switch to choose which tests
+    # to run.
     - php: 5.6
       env: DB=SQLITE TESTS=1
     - php: 5.6
@@ -77,3 +79,11 @@ script:
   - "if [ \"$TESTS\" = \"11\" ]; then vendor/bin/phpunit --coverage-clover=coverage.clover $MODULE_PATH/tests/long/SearchableTest.php; fi"
   - "if [ \"$TESTS\" = \"10\" ]; then vendor/bin/phpunit --coverage-clover=coverage.clover $MODULE_PATH/tests/long/SearchAndIndexingTest.php; fi"
   - "if [ \"$TESTS\" = \"11\" ]; then vendor/bin/phpunit --coverage-clover=coverage.clover $MODULE_PATH/tests/long/TranslatableUnitTest.php; fi"
+
+
+after_success:
+  - mv coverage.clover ~/build/$TRAVIS_REPO_SLUG/
+  - cd ~/build/$TRAVIS_REPO_SLUG
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - codecov
