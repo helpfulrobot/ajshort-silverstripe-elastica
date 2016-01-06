@@ -1,62 +1,39 @@
-SilverStripe Elastica Module
-============================
+#SilverStripe Elastica Module
 
-Provides elastic search integration for SilverStripe DataObjects using Elastica.
+# SilverStripe Continuous Integration Example
+[![Build Status](https://travis-ci.org/gordonbanderson/silverstripe-elastica.svg?branch=dev2)](https://travis-ci.org/gordonbanderson/silverstripe-elastica)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gordonbanderson/silverstripe-elastica/badges/quality-score.png?b=dev2)](https://scrutinizer-ci.com/g/gordonbanderson/silverstripe-elastica/?branch=dev2)
+[![Code Coverage](https://scrutinizer-ci.com/g/gordonbanderson/silverstripe-elastica/badges/coverage.png?b=dev2)](https://scrutinizer-ci.com/g/gordonbanderson/silverstripe-elastica/?branch=dev2)
+[![Build Status](https://scrutinizer-ci.com/g/gordonbanderson/silverstripe-elastica/badges/build.png?b=dev2)](https://scrutinizer-ci.com/g/gordonbanderson/silverstripe-elastica/build-status/dev2)
+[![codecov.io](https://codecov.io/github/gordonbanderson/silverstripe-elastica/coverage.svg?branch=dev2)](https://codecov.io/github/gordonbanderson/silverstripe-elastica?branch=dev2)
 
-Usage
------
+[![Latest Stable Version](https://poser.pugx.org/weboftalent/elastica/version)](https://packagist.org/packages/weboftalent/elastica)
+[![Latest Unstable Version](https://poser.pugx.org/weboftalent/elastica/v/unstable)](//packagist.org/packages/weboftalent/elastica)
+[![Total Downloads](https://poser.pugx.org/weboftalent/elastica/downloads)](https://packagist.org/packages/weboftalent/elastica)
+[![License](https://poser.pugx.org/weboftalent/elastica/license)](https://packagist.org/packages/weboftalent/elastica)
+[![Monthly Downloads](https://poser.pugx.org/weboftalent/elastica/d/monthly)](https://packagist.org/packages/weboftalent/elastica)
+[![Daily Downloads](https://poser.pugx.org/weboftalent/elastica/d/daily)](https://packagist.org/packages/weboftalent/elastica)
 
-The first step is to configure the Elastic Search service. To do this, the configuration system
-is used. The simplest default configuration (i.e. for `mysite/_config/injector.yml`) is:
+![codecov.io](https://codecov.io/github/gordonbanderson/silverstripe-elastica/branch.svg?branch=dev2)
 
-    Injector:
-      SilverStripe\Elastica\ElasticaService:
-        constructor:
-          - %$Elastica\Client
-          - index-name-to-use
+##Maintainers
 
-You can then use the `SilverStripe\Elastica\Searchable` extension to add search functionality
-to your data objects.
+* Gordon Anderson
 
-You could, for example add the following code to `mysite/_config/injector.yml`:
+##Introduction
 
-    SiteTree:
-      extensions:
-        - 'SilverStripe\Elastica\Searchable'
+This module provides a SilverStripe wrapper around the powerful elastica search engine.
 
-Elasticsearch can then be interacted with by using the `SilverStripe\Elastica\ElasticService` class.
+##Documentation
+* [Installation](./docs/en/Installation.md)
+* [Configuration](./docs/en/Configuration.md)
+* [Indexing - Manipulating Mapping and Indexed Content](./docs/en/Indexing.md)
+* [Tasks](./docs/en/Tasks.md)
+* [Searching within the CMS](./docs/en/SearchPages.md)
+* [Searching Using Code](./docs/en/SearchingPHP.md)
+* [Aggregated Search](./docs/en/Aggregation.md)
+* [How Data is Indexed and Searched by the Module](./docs/en/HowDataIsIndexedAndSearched.md)
+* [Command Line Tools](./docs/en/CommandLineTools.md)
 
-To add special fields to the index, just update $searchable_fields of an object:
-
-    class SomePage extends Page
-    {
-        private static $db = array(
-            "SomeField1" => "Varchar(255)",
-            "SomeField2"  => "Varchar(255)"
-        );
-        private static $searchable_fields = array(
-            "SomeField1",
-            "SomeField2"
-        );
-    }
-
-After every change to your data model you should execute the `SilverStripe-Elastica-ReindexTask`:
-
-    php framework/cli-script.php dev/tasks/SilverStripe-Elastica-ReindexTask
-
-Sometimes you might want to change documents or mappings (eg. for special boosting settings) before they are sent to elasticsearch.
-For that purpose just add some methods to your Classes:
-
-    class SomePage extends Page
-    {
-        public static function updateElasticsearchMapping(\Elastica\Type\Mapping $mapping)
-        {
-            return $mapping;
-        }
-
-        public function updateElasticsearchDocument(\Elastica\Document $document)
-        {
-            return $document;
-        }
-    }
-
+##Requirements
+* SilverStripe 3.1
