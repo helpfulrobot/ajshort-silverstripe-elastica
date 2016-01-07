@@ -54,8 +54,6 @@ class SearchableField extends DataObject
 
     public function HumanReadableSearchable()
     {
-        echo $this->Searchable;
-
         return ElasticaUtil::showBooleanHumanReadable($this->Searchable);
     }
 }
