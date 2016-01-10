@@ -12,8 +12,10 @@
 [![Monthly Downloads](https://poser.pugx.org/weboftalent/elastica/d/monthly)](https://packagist.org/packages/weboftalent/elastica)
 [![Daily Downloads](https://poser.pugx.org/weboftalent/elastica/d/daily)](https://packagist.org/packages/weboftalent/elastica)
 
-![codecov.io](https://codecov.io/github/gordonbanderson/silverstripe-elastica/branch.svg?branch=master)
+[![Dependency Status](https://www.versioneye.com/php/weboftalent:elastica/badge.svg)](https://www.versioneye.com/php/weboftalent:elastica)
+[![Reference Status](https://www.versioneye.com/php/weboftalent:elastica/reference_badge.svg?style=flat)](https://www.versioneye.com/php/weboftalent:elastica/references)
 
+![codecov.io](https://codecov.io/github/gordonbanderson/silverstripe-elastica/branch.svg?branch=master)
 ##Maintainers
 
 * Gordon Anderson
